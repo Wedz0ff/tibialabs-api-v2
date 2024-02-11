@@ -1,6 +1,6 @@
 async function TibiaDataCrawler(end) {
   try {
-    const response = await fetch(`https://api.tibiadata.com/v3/${end}`);
+    const response = await fetch(`https://api.tibiadata.com/v4/${end}`);
     return response.json();
   } catch (e) {
     return "Couldn't connect to TibiaData API";
@@ -21,19 +21,19 @@ function formatGuildDate(date) {
 
 async function CharacterInfo(name) {
   const res = await TibiaDataCrawler(`character/${name}`);
-  const data = res["characters"]["character"];
+  const data = res["character"]["character"];
   return data;
 }
 
 async function GuildInfo(name) {
   const res = await TibiaDataCrawler(`guild/${name}`);
-  const data = res["guilds"]["guild"];
+  const data = res["guild"];
   return data;
 }
 
 async function WorldInfo(name) {
   const res = await TibiaDataCrawler(`world/${name}`);
-  const data = res["worlds"]["world"];
+  const data = res["world"];
   const worldName = data["name"];
   const worldType = data["pvp_type"];
   const worldCreated = formatDate(data["creation_date"]);
@@ -56,10 +56,10 @@ async function AllWorldsInfo() {
 }
 
 export {
-  TibiaDataCrawler,
-  formatGuildDate,
+  AllWorldsInfo,
   CharacterInfo,
   GuildInfo,
+  TibiaDataCrawler,
   WorldInfo,
-  AllWorldsInfo,
+  formatGuildDate,
 };
